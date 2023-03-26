@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.forumapp.adapters.ChatAdapter;
 import com.example.forumapp.databinding.ActivityInChatBinding;
@@ -89,6 +90,14 @@ public class InChatActivity extends BaseActivity {
         binding.inputMessage.setText(null);
     }
 
+    private void showToast(String message){
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendNotification(String messageBody){
+
+    }
+
     private void listenAvailabilityOfReceiver(){
         database.collection(Constants.KEY_COLLECTION_USERS).document(
                 receiverUser.id
@@ -103,6 +112,7 @@ public class InChatActivity extends BaseActivity {
                     ).intValue();
                     isReceiverAvailable = availability == 1;
                 }
+                receiverUser.token = value.getString(Constants.KEY_FCM_TOKEN);
             }
             if(isReceiverAvailable){
                 binding.textAvailability.setVisibility(View.VISIBLE);
